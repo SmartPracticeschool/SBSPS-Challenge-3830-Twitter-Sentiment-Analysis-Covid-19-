@@ -1,0 +1,148 @@
+{% extends "twitter/base.html" %}
+{% block content %}
+
+<script type="text/javascript">
+
+////// DATASETS ////////////////////
+  const dataset_1_TendingTopics = [{
+    label:'{{top_5.terms.0}}',
+    borderColor:'Yellow',
+    data:{{top_5.count.0}}
+    },
+    {
+      label:'{{top_5.terms.1}}',
+      borderColor:'Pink',
+      data:{{top_5.count.1}}
+    },
+    {
+      label:'{{top_5.terms.2}}',
+      borderColor:'Aqua',
+      data:{{top_5.count.2}}
+    },
+    {
+      label:'{{top_5.terms.3}}',
+      borderColor:'Red',
+      data:{{top_5.count.3}}
+    },
+    {
+      label:'{{top_5.terms.4}}',
+      borderColor:'Green',
+      data:{{top_5.count.4}}
+    }
+];
+
+const dataset_2_PositiveNegative = [
+  {
+    label:'Negative Tweets',
+    borderColor:'#9300ff',
+    data:{{pos_neg.negative}}
+  },
+  {
+    label:'Positive Tweets',
+    borderColor:'#40acff',
+    data:{{pos_neg.positive}}
+  }
+];
+
+const dataset_3_Emotions = [
+  {
+    label:'Relief',
+    borderColor:'#dbff34',
+    data:{{emotion.relief}},
+    pointRadius:0
+  },
+  {
+    label:'Anxious',
+    borderColor:'#d90ee7',
+    data:{{emotion.anxious}},
+    pointRadius:0
+  },
+  {
+    label:'Happy',
+    borderColor:'#00ff00',
+    data:{{emotion.happy}},
+    pointRadius:0
+  },
+  {
+    label:'Sad',
+    borderColor:'#f20002',
+    data:{{emotion.sad}},
+    pointRadius:0
+  }
+];
+//////// Do not touch after here //////////////////////////////
+////////////////////////GLOBAL CONFIGS ///////////////////////////
+  const ticks = {fontColor:"white"};
+  const legend = {display:true,position:'bottom',labels:{fontColor:'white'}};
+///////////////GRAPH STARTS ///////////////////////////////////////////
+  const labels_1 = {{top_5.dates}};
+  new Chart(document.getElementById("tending_topics_twitter"), {
+  type: 'line',
+  data: {
+    labels: labels_1,
+    datasets: dataset_1_TendingTopics
+  },
+  options: {
+    legend: legend,
+    title: {display: false},
+    scales: {
+            yAxes: [
+              {
+                gridLines:{display:true}
+              }
+            ],
+            xAxes: [{
+                gridLines:{display:false}
+            }]
+        }
+  }
+});
+new Chart(document.getElementById("positive-negative"), {
+    type: 'line',
+    data: {
+      labels: {{pos_neg.dates}},
+      datasets: dataset_2_PositiveNegative
+    },
+    options: {
+
+      legend: legend,
+      title: { display: false },
+      scales: {
+              yAxes: [
+                {
+                  gridLines: {color:"blue"}
+                }
+            ],
+              xAxes: [
+                {
+                  gridLines:{display:false}
+              }
+            ]
+          }
+    }
+});
+new Chart(document.getElementById("emotions"), {
+    type: 'line',
+    data: {
+      labels: {{emotion.dates}},
+      datasets: dataset_3_Emotions
+    },
+    options: {
+      legend: legend,
+      title: { display : false },
+      scales: {
+              yAxes: [{
+                beginAtZero: true,
+                gridLines: { color: "Blue" },
+              }],
+              xAxes: [{
+                beginAtZero: true,
+                gridLines: { display: false },
+              }]
+          }
+    }
+});
+
+  </script>
+
+{% endblock content %}

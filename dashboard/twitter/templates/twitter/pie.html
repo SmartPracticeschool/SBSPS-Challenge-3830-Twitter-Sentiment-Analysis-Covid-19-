@@ -1,0 +1,101 @@
+{% extends "twitter/base.html" %}
+{% block content %}
+
+<script type="text/javascript">
+
+////// DATASETS ////////////////////
+  const dataset_1_TendingTopics = [{
+    label:'No of Tweets',
+    backgroundColor:["Yellow", "Pink","Aqua","Blue","Green"],
+    data:{{top_5.count}},
+    borderWidth:0
+    }
+];
+
+const dataset_2_PositiveNegative = [
+  {
+    label:'No of Tweets',
+    backgroundColor:['Yellow','Indigo'],
+    data:[{{emotion.positive}},{{emotion.negative}}],
+    borderWidth:0
+  }
+];
+
+const dataset_3_Emotions = [
+  {
+    label:'No of Tweets',
+    backgroundColor:['Yellow','Indigo','White','Red'],
+    data:[{{emotion.happy}},{{emotion.sad}},{{emotion.anxious}},{{emotion.relieg}}],
+    borderWidth:0
+  }
+];
+//////// Do not touch after here //////////////////////////////
+////////////////////////GLOBAL CONFIGS ///////////////////////////
+  const ticks = {fontColor:"white"};
+  const legend = {display:true,position:'bottom',labels:{fontColor:'white'}};
+///////////////GRAPH STARTS ///////////////////////////////////////////
+let labels_1 = [];
+{% for term in top_5.terms %}
+ labels_1.push('{{term}}');
+{% endfor %}
+  new Chart(document.getElementById("tending_topics_twitter"), {
+  type: 'pie',
+  data: {
+    labels: labels_1,
+    datasets: dataset_1_TendingTopics
+  },
+  options: {
+    legend: legend,
+    title: {display: false}
+  }
+});
+new Chart(document.getElementById("positive-negative"), {
+    type: 'doughnut',
+    data: {
+      labels: ['Positive','Negative'],
+      datasets: dataset_2_PositiveNegative
+    },
+    options: {
+
+      legend: legend,
+      title: { display: false }
+    }
+});
+</script>
+<script>
+new Chart(document.getElementById("emotions"), {
+    type: 'doughnut',
+    data: {
+      labels: ['Happy','Sad','Anxious','Relief'],
+      datasets: dataset_3_Emotions
+    },
+    options: {
+      legend: legend,
+      title: { display : false }
+    }
+});
+
+
+// Chart.pluginService.register({
+//   beforeDraw: function(chart) {
+//     var width = chart.chart.width,
+//         height = chart.chart.height,
+//         ctx = chart.chart.ctx;
+//
+//     ctx.restore();
+//     var fontSize = (height / 114).toFixed(2);
+//     ctx.font = fontSize + "em sans-serif";
+//     ctx.textBaseline = "middle";
+//
+//     var text = "50%",
+//         textX = Math.round((width - ctx.measureText(text).width) / 2),
+//         textY = height / 2;
+//
+//     ctx.fillText(text, textX, textY);
+//     ctx.save();
+//   }
+// });
+
+  </script>
+
+{% endblock content %}
