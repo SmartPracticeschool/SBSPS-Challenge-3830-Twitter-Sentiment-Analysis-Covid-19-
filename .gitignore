@@ -28,7 +28,6 @@ var/
 .installed.cfg
 *.egg
 
-# PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
@@ -63,6 +62,6 @@ target/
 
 /venv
 /dashboard/vendor
-/processTweets/train/glove.6B.300d.txt
+/processTweets/NN/glove.6B.300d.txt
 
 *.sqlite3
